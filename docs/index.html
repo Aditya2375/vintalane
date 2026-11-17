@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Synthetic alternative-data publication clocks, revision-aware joins and frozen ridge probes."
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="theme-color" content="#27313e" />
+    <title>Vintalane - known then, revised later</title>
+    <link rel="icon" href="icon.svg" />
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#lab">Skip to pipeline</a>
+    <header>
+      <a class="brand" href="#">vintalane<span>↗</span></a
+      ><span class="header-note">ALTERNATIVE DATA / INFORMATION CLOCKS</span
+      ><a href="#method">Method &amp; limits ↗</a>
+    </header>
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">
+            THE DATE ON THE DATA IS NOT THE DATE YOU KNEW IT
+          </p>
+          <h1>Known then.<br /><i>Revised later.</i></h1>
+          <p class="intro">
+            A proxy arrives late. A revision arrives later. Walk an invented
+            alternative-data pipeline from publication records to frozen
+            predictions, without borrowing tomorrow's information.
+          </p>
+          <p class="badge">
+            Synthetic proxies &amp; outcomes · no tracking · no trades
+          </p>
+        </div>
+        <aside>
+          <div class="clock-row"><span>OBSERVATION</span><b>Day 40</b></div>
+          <div class="connector"></div>
+          <div class="clock-row active">
+            <span>FIRST AVAILABLE</span><b>Day 43</b>
+          </div>
+          <div class="connector"></div>
+          <div class="clock-row"><span>REVISED VERSION</span><b>Day 48</b></div>
+          <p>Three dates. Two versions.<br />One decision that cannot wait.</p>
+        </aside>
+      </section>
+      <section id="lab" class="lab">
+        <div class="section-top">
+          <div>
+            <p class="eyebrow">01 / BUILD THE INFORMATION SET</p>
+            <h2>Make the clock explicit.</h2>
+          </div>
+          <button id="reset" type="button">Reset pipeline ↺</button>
+        </div>
+        <div class="controls">
+          <label
+            >Invented world<select id="scenario">
+              <option value="0">Engineered relationship</option>
+              <option value="1">Independent outcome</option>
+              <option value="2">Later coefficient reversal</option>
+            </select></label
+          ><label
+            >Extra publication delay<select id="delay">
+              <option value="0">No added delay</option>
+              <option value="1">Add 3 days to every release</option>
+            </select></label
+          >
+          <p>
+            Fit at day 140 · λ = 8<br />Formation decisions 20..139 · test
+            140..219
+          </p>
+        </div>
+        <div class="world">
+          <h3 id="world-title"></h3>
+          <p id="world-description"></p>
+        </div>
+        <p id="status" role="status" aria-live="polite"></p>
+        <div class="metrics">
+          <article>
+            <span>KNOWN-TIME TEST RMSE</span><strong id="rmse"></strong
+            ><small>Outcome units, not a portfolio return</small>
+          </article>
+          <article>
+            <span>UNAVAILABLE VALUES IN KNOWN-TIME JOIN</span
+            ><strong id="leaks"></strong><small id="hindsight-leaks"></small>
+          </article>
+          <article>
+            <span>COMPLETE TEST ROWS</span><strong id="count"></strong
+            ><small id="excluded"></small>
+          </article>
+        </div>
+      </section>
+      <section class="pipeline">
+        <article>
+          <span>1</span>
+          <h3>Versioned records</h3>
+          <p>
+            Two invented activity proxies. Observation day, availability day and
+            revision ID stay separate.
+          </p>
+        </article>
+        <article>
+          <span>2</span>
+          <h3>Known-time join</h3>
+          <p>
+            Latest eligible observation, then latest available version. An 8-day
+            age limit. Missing stays missing.
+          </p>
+        </article>
+        <article>
+          <span>3</span>
+          <h3>Frozen probe</h3>
+          <p>
+            Common complete rows, formation-only means and scales, fixed ridge
+            coefficients. No test refit.
+          </p>
+        </article>
+      </section>
+      <section class="panel scores">
+        <div class="section-top">
+          <div>
+            <p class="eyebrow">02 / TWO LENSES, THE SAME ROWS</p>
+            <h2>The hindsight lens is deliberately invalid.</h2>
+          </div>
+          <span class="warning">NOT A DEPLOYABLE COMPETITOR</span>
+        </div>
+        <div
+          class="table-wrap"
+          tabindex="0"
+          role="region"
+          aria-label="Test scores, scroll horizontally"
+        >
+          <table>
+            <caption>
+              Both ridge fits and the frozen-mean baseline use common complete
+              formation/test rows.
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Pipeline</th>
+                <th scope="col">Test rows</th>
+                <th scope="col">RMSE</th>
+                <th scope="col">MAE</th>
+                <th scope="col">MSE skill vs frozen mean</th>
+              </tr>
+            </thead>
+            <tbody id="score-rows"></tbody>
+          </table>
+        </div>
+        <p class="caption">
+          The hindsight join ignores release dates and uses final revisions for
+          an observation. It can look better, but need not. Skill = 1 − model
+          MSE / frozen training-mean MSE, not ordinary test-centered R², a
+          p-value or evidence of real alpha.
+        </p>
+      </section>
+      <section class="inspect">
+        <div class="section-top">
+          <div>
+            <p class="eyebrow">03 / AUDIT ONE DECISION</p>
+            <h2>What could the model actually know?</h2>
+          </div>
+          <div class="day-controls">
+            <button id="prev" type="button" aria-label="Previous decision">
+              ←</button
+            ><label for="day"
+              >Decision day <strong id="day-label"></strong
+              ><input
+                id="day"
+                type="range"
+                min="20"
+                max="219"
+                value="140" /></label
+            ><button id="next" type="button" aria-label="Next decision">
+              →
+            </button>
+          </div>
+        </div>
+        <p id="row-status" class="row-status"></p>
+        <div class="lineage-grid">
+          <article class="panel known">
+            <h3>Known-time lens</h3>
+            <p>Release day ≤ decision day</p>
+            <div id="known-cards"></div>
+          </article>
+          <article class="panel revised">
+            <h3>Hindsight lens</h3>
+            <p>Release cutoff ignored on purpose</p>
+            <div id="revised-cards"></div>
+          </article>
+        </div>
+        <div class="audit-footer">
+          <p>Known-time prediction<strong id="known-pred"></strong></p>
+          <p>Hindsight prediction<strong id="revised-pred"></strong></p>
+          <p>Outcome, available next day<strong id="target"></strong></p>
+        </div>
+      </section>
+      <section class="charts">
+        <article class="panel">
+          <p class="eyebrow">04 / LEAVE FORMATION BEHIND</p>
+          <h2>Test predictions &amp; later outcomes</h2>
+          <p class="legend">
+            <span class="actual">Outcome</span
+            ><span class="known-key">Known-time</span
+            ><span class="revised-key">Hindsight</span>
+          </p>
+          <canvas
+            id="predictions"
+            aria-label="Test-period target and both frozen ridge predictions; gaps mark excluded rows"
+          ></canvas>
+          <p class="caption">
+            Lines connect included daily rows only; missing rows break the line.
+            The outcome arrives one day after each decision. These are
+            prediction errors, not realized trading returns.
+          </p>
+        </article>
+        <article class="panel">
+          <p class="eyebrow">05 / FIT ONCE</p>
+          <h2>What did formation teach it?</h2>
+          <div
+            class="table-wrap"
+            tabindex="0"
+            role="region"
+            aria-label="Frozen coefficients and preprocessing, scroll horizontally"
+          >
+            <table>
+              <caption>
+                Population standardization on formation rows; intercept not
+                penalized
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Known-time</th>
+                  <th scope="col">Hindsight</th>
+                </tr>
+              </thead>
+              <tbody id="fit-rows"></tbody>
+            </table>
+          </div>
+          <p class="caption">
+            Minimize sum of squared residuals + 8 × sum of squared standardized
+            slopes. There is no hyperparameter search. Coefficients belong to
+            this invented sample, not economic effects or factor returns.
+          </p>
+        </article>
+      </section>
+      <section class="panel ledgers">
+        <div class="section-top">
+          <div>
+            <p class="eyebrow">06 / KEEP THE PROVENANCE</p>
+            <h2>Every join. Every version.</h2>
+          </div>
+          <button id="download" type="button">
+            Export full pipeline JSON ↓
+          </button>
+        </div>
+        <details>
+          <summary>
+            All 200 decision rows, including exclusions and source record IDs
+          </summary>
+          <div
+            class="table-wrap"
+            tabindex="0"
+            role="region"
+            aria-label="All decision rows, scroll horizontally"
+          >
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Day</th>
+                  <th scope="col">Partition</th>
+                  <th scope="col">Included?</th>
+                  <th scope="col">Known IDs</th>
+                  <th scope="col">Hindsight IDs</th>
+                  <th scope="col">Known prediction</th>
+                  <th scope="col">Hindsight prediction</th>
+                  <th scope="col">Outcome</th>
+                  <th scope="col">Label available</th>
+                </tr>
+              </thead>
+              <tbody id="decision-rows"></tbody>
+            </table>
+          </div>
+        </details>
+        <details>
+          <summary id="record-summary">All publication records</summary>
+          <div
+            class="table-wrap"
+            tabindex="0"
+            role="region"
+            aria-label="All publication records, scroll horizontally"
+          >
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Source</th>
+                  <th scope="col">Observation day</th>
+                  <th scope="col">Available day</th>
+                  <th scope="col">Version</th>
+                  <th scope="col">Value</th>
+                </tr>
+              </thead>
+              <tbody id="record-rows"></tbody>
+            </table>
+          </div>
+        </details>
+      </section>
+      <section id="method" class="method">
+        <div>
+          <p class="eyebrow">SCOPE / THE CLOCK IS ONLY THE START</p>
+          <h2>A pipeline audit.<br />Not an alpha claim.</h2>
+          <p>
+            Footfall and shipments are fictional aggregate activity proxies. No
+            individual, company, device, vendor feed, location trace or real
+            return is represented.
+          </p>
+          <a href="https://github.com/Aditya2375/vintalane"
+            >Source, CLI &amp; full numerical contract ↗</a
+          >
+        </div>
+        <div class="notes">
+          <article>
+            <h3>Two clocks, one hard cutoff</h3>
+            <p>
+              For each required proxy, observation ≤ decision, availability ≤
+              decision, and age ≤ 8 days. Choose greatest observation day, then
+              greatest availability day, then record ID. Equality is eligible.
+              First releases arrive after 1 or 3 days; revisions after 6 or 8.
+              Added delay shifts every release by 3 days, not the observation.
+              The hindsight lens drops only the availability test.
+            </p>
+          </article>
+          <article>
+            <h3>Labels have a clock too</h3>
+            <p>
+              Decision t predicts outcome t+1, available at t+1. Formation
+              decisions 20..139 use labels available by fit clock 140. Test
+              decisions 140..219 have later labels and never update scaling or
+              coefficients. Each lens has its own frozen transform, on the same
+              common complete row IDs.
+            </p>
+          </article>
+          <article>
+            <h3>Missingness is visible</h3>
+            <p>
+              Shipments observations 80..95 and 175..190 are absent. If no
+              eligible proxy is within 8 days, exclude that decision from both
+              lenses and the baseline. No backfill, interpolation or future
+              imputation. Common complete cases improve comparison but may bias
+              the selected sample; added delay changes the cohort.
+            </p>
+          </article>
+          <article>
+            <h3>Construction is not discovery</h3>
+            <p>
+              One generator deliberately shares hidden activity with later
+              outcomes. Another uses independent outcome noise. A third reverses
+              the relationship only in the test. No costs, positions, trades,
+              market validation, causal effect or significance test. Real
+              alternative data also needs lawful sourcing, privacy, rights,
+              release/ingestion logs and representative coverage.
+            </p>
+          </article>
+        </div>
+      </section>
+      <section class="sources">
+        <p class="eyebrow">CONCEPT REFERENCES / NO EXTERNAL DATA BUNDLED</p>
+        <a
+          href="https://docs.feast.dev/getting-started/concepts/point-in-time-joins"
+          >Feast: point-in-time joins ↗</a
+        ><a href="https://alfred.stlouisfed.org/help/downloaddata"
+          >ALFRED: historical vintages ↗</a
+        ><a href="https://scikit-learn.org/stable/common_pitfalls.html"
+          >Scikit-learn: leakage boundaries ↗</a
+        >
+      </section>
+    </main>
+    <footer>
+      <a class="brand" href="#">vintalane<span>↗</span></a>
+      <p>Never let a revised past impersonate a known one.</p>
+      <span>MIT · Aditya Kulkarni</span>
+    </footer>
+  </body>
+</html>

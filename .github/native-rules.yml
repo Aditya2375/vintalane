@@ -1,0 +1,12 @@
+rules:
+  - id: no-native-effects
+    pattern-either:
+      - pattern: subprocess.$F(...)
+      - pattern: os.system(...)
+      - pattern: eval(...)
+      - pattern: exec(...)
+      - pattern: open(..., "w", ...)
+      - pattern: socket.socket(...)
+    languages: [python]
+    message: Original runtime must not execute external code, open network sockets or write files.
+    severity: ERROR
