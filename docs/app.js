@@ -3,7 +3,8 @@ const $ = (id) => document.getElementById(id),
   put = (id, v) => {
     $(id).textContent = v;
   },
-  fmt = (v, d = 5) => (v === null ? "undefined" : v.toFixed(d));
+  fmt = (v, d = 5) => (v === null ? "undefined" : v.toFixed(d)),
+  prediction = (v) => (v === null ? "Not scored (missing input)" : fmt(v));
 let state = settings(),
   result,
   day = 140;
@@ -78,8 +79,8 @@ function audit() {
   );
   cards("known-cards", row.known);
   cards("revised-cards", row.revised);
-  put("known-pred", fmt(row.known_prediction));
-  put("revised-pred", fmt(row.revised_prediction));
+  put("known-pred", prediction(row.known_prediction));
+  put("revised-pred", prediction(row.revised_prediction));
   put("target", fmt(row.target));
 }
 function chart() {
@@ -196,8 +197,8 @@ function render() {
       row.included ? "yes" : "no",
       row.known.map((v) => (v ? `#${v.id}` : "missing")).join(" / "),
       row.revised.map((v) => (v ? `#${v.id}` : "missing")).join(" / "),
-      fmt(row.known_prediction),
-      fmt(row.revised_prediction),
+      prediction(row.known_prediction),
+      prediction(row.revised_prediction),
       fmt(row.target),
       row.label_available,
     ]),

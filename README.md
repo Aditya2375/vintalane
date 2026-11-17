@@ -105,7 +105,7 @@ All scores use common complete **test** decision rows only. A frozen-mean baseli
 MSE skill = 1 − model test MSE / frozen-mean baseline test MSE
 ```
 
-Zero skill matches this baseline, negative is worse, positive is lower MSE. This is not ordinary test-mean-centered R², rank IC, a probability, p-value or a significance test. If there are no usable test rows, metrics are undefined. Skill is undefined if baseline MSE ≤ 1e−24. Counts and exclusions are shown. Line charts break at excluded decisions; they do not interpolate predictions through missing inputs.
+Zero skill matches this baseline, negative is worse, positive is lower MSE. This is not ordinary test-mean-centered R², rank IC, a probability, p-value or a significance test. If there are no usable test rows, metrics are undefined. Skill is undefined if baseline MSE ≤ 1e−24. Counts and exclusions are shown. Excluded predictions display "Not scored (missing input)" in the decision audit and row ledger; their JSON values stay `null` and they do not enter scores. Line charts break at excluded decisions; they do not interpolate predictions through missing inputs.
 
 Prediction quality on an engineered toy does not establish economic value, causal effects or real alpha. No multiple-seed robustness study or confidence interval is claimed. Changing the world/delay after seeing results is descriptive exploration, not untouched external validation. In particular, good data-clock hygiene is necessary but far from sufficient for a useful strategy.
 

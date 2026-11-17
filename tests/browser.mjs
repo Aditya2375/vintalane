@@ -26,6 +26,7 @@ const check = (v, m) => {
     assert(v, m);
   },
   fmt = (v, d = 5) => (v === null ? "undefined" : v.toFixed(d)),
+  prediction = (v) => (v === null ? "Not scored (missing input)" : fmt(v)),
   configs = [];
 for (const scenario of [0, 1, 2])
   for (const delay of [0, 1]) configs.push({ scenario, delay });
@@ -63,12 +64,12 @@ try {
       );
       check(
         (await page.locator("#known-pred").textContent()) ===
-          fmt(row.known_prediction),
+          prediction(row.known_prediction),
         "known prediction",
       );
       check(
         (await page.locator("#revised-pred").textContent()) ===
-          fmt(row.revised_prediction),
+          prediction(row.revised_prediction),
         "revised prediction",
       );
       check(
@@ -153,8 +154,8 @@ try {
               v.included ? "yes" : "no",
               v.known.map((x) => (x ? `#${x.id}` : "missing")).join(" / "),
               v.revised.map((x) => (x ? `#${x.id}` : "missing")).join(" / "),
-              fmt(v.known_prediction),
-              fmt(v.revised_prediction),
+              prediction(v.known_prediction),
+              prediction(v.revised_prediction),
               fmt(v.target),
               String(v.label_available),
             ]),
@@ -221,10 +222,10 @@ try {
       await verify(states[i]);
       for (const day of [20, 90, 100, 140, 185, 219])
         await audit(day, states[i]);
-      if (width === 320 && i === 1) {
+      if ((width === 320 || width === 1440) && i === 1) {
         await audit(90, states[i]);
         await page.screenshot({
-          path: "/tmp/vintalane-shots/mobile-missing.png",
+          path: `/tmp/vintalane-shots/${width === 320 ? "mobile" : "desktop"}-missing.png`,
           fullPage: true,
         });
       }
